@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse Receipt — Arc stamp registry</title>
+    <meta
+      name="description"
+      content="Stamp an immutable Pulse market-alert receipt on Arc. Gas is native USDC."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="desk">
+      <aside class="rail" aria-label="Arc network facts">
+        <p class="rail-kicker">ARC · CIRCLE</p>
+        <p class="rail-title">USDC gas</p>
+        <dl>
+          <div>
+            <dt>Native</dt>
+            <dd>18 decimals</dd>
+          </div>
+          <div>
+            <dt>ERC-20</dt>
+            <dd>6 @ 0x3600…000</dd>
+          </div>
+          <div>
+            <dt>Same balance</dt>
+            <dd>do not mix 1e6 / 1e18</dd>
+          </div>
+        </dl>
+        <p class="rail-foot">
+          Companion to Pulse Screener. This page only writes a receipt. Pulse Go
+          indexing is optional.
+        </p>
+      </aside>
+
+      <main>
+        <header class="mast">
+          <div>
+            <p class="mast-kicker">PULSE SCREENER · ON-CHAIN LAYER</p>
+            <h1>Pulse Receipt</h1>
+            <p class="mast-sub">
+              Stamp an immutable Pulse alert on Arc mainnet (5042). Gas is
+              native USDC. After deploy, paste the contract address below.
+            </p>
+          </div>
+          <div class="mast-actions">
+            <label class="net-switch">
+              <span class="sr-only">Network</span>
+              <select id="network" aria-label="Arc network">
+                <option value="mainnet" selected>Arc Mainnet · 5042</option>
+                <option value="testnet">Arc Testnet · 5042002 (rehearsal)</option>
+              </select>
+            </label>
+            <button type="button" id="connect" class="btn btn-ink">Connect wallet</button>
+            <p id="account" class="account" hidden></p>
+          </div>
+        </header>
+
+        <p id="banner" class="banner" hidden role="status"></p>
+
+        <section class="receipt" aria-labelledby="stamp-title">
+          <div class="perforation" aria-hidden="true"></div>
+          <header class="receipt-head">
+            <p>ARC REGISTRY</p>
+            <h2 id="stamp-title">Stamp a receipt</h2>
+            <p class="receipt-no">No. <span id="next-id">—</span></p>
+          </header>
+
+          <form id="stamp-form">
+            <div class="fields">
+              <label>
+                <span>CMC ID</span>
+                <input id="cmcId" name="cmcId" inputmode="numeric" value="1" required />
+                <small>BTC = 1 · ETH = 1027</small>
+              </label>
+              <label>
+                <span>Threshold</span>
+                <input id="threshold" name="threshold" value="500" required />
+                <small>Signed int. +500 / −300 Pulse units</small>
+              </label>
+              <label>
+                <span>Kind</span>
+                <select id="kind" name="kind">
+                  <option value="0">0 · Alert</option>
+                  <option value="1">1 · Manual</option>
+                </select>
+                <small>Alert = Pulse fire · Manual = you stamped it</small>
+              </label>
+              <label class="wide">
+                <span>Note</span>
+                <input id="note" name="note" maxlength="280" placeholder="BTC 24h change crossed +5%" />
+                <small><span id="note-count">0</span>/280</small>
+              </label>
+              <label class="wide">
+                <span>Alert hash</span>
+                <div class="hash-row">
+                  <input id="alertHash" name="alertHash" spellcheck="false" required />
+                  <button type="button" id="reshuffle" class="btn btn-ghost">Reshuffle</button>
+                </div>
+                <small>Derived from the fields. Paste a Pulse payload hash if you have one.</small>
+              </label>
+              <label class="wide">
+                <span>Contract</span>
+                <input id="contract" name="contract" spellcheck="false" placeholder="0x… PulseReceipt on Arc mainnet" />
+                <small>Paste the address from forge script / forge create. Or open ?address=0x…&amp;network=mainnet</small>
+              </label>
+            </div>
+
+            <div class="receipt-actions">
+              <button type="submit" id="stamp" class="btn btn-pulse">Stamp on Arc</button>
+              <button type="button" id="switch-chain" class="btn btn-ghost">Switch wallet to Arc</button>
+            </div>
+          </form>
+
+          <div id="tx-panel" class="tear" hidden>
+            <p class="tear-kicker">STAMPED</p>
+            <p id="tx-status" class="tear-status"></p>
+            <a id="tx-link" class="tear-link" href="#" target="_blank" rel="noreferrer">Open on Arc explorer</a>
+          </div>
+          <div class="perforation bottom" aria-hidden="true"></div>
+        </section>
+
+        <section class="stack" aria-labelledby="recent-title">
+          <div class="stack-head">
+            <h2 id="recent-title">Recent receipts</h2>
+            <button type="button" id="refresh" class="btn btn-ghost">Refresh</button>
+          </div>
+          <p id="list-status" class="list-status">Listening for <code>ReceiptStamped</code>…</p>
+          <ol id="receipts" class="tickets"></ol>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
