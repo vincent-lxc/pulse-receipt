@@ -70,11 +70,10 @@ Arc 是结算和 gas 层，不是事后挂上的侧链。
 ## Live deployment (mainnet)
 
 ```text
-TODO after mainnet broadcast
-
-Web UI: https://TODO
-Contract: https://explorer.arc.io/address/TODO
-Example stamp tx: https://explorer.arc.io/tx/TODO
+Web UI: open web/ locally (Vite) against the mainnet address below; hosted UI optional for judges who can use explorer + stamp tx.
+Contract: https://explorer.arc.io/address/0x4FACE6592Ba1AdF83E35B01CcD93D8704d647C01
+Example stamp tx: https://explorer.arc.io/tx/0xb686190e05b44c0be840db1f2b3ff505b791eef482d6daec0c8f603bef2ebb06
+Deploy tx: https://explorer.arc.io/tx/0x6cee9ea9a7ea89ecec9be87228175b1806cae67a61511569a5b08b49a359f3e0
 RPC used: https://rpc.mainnet.arc.io
 Chain ID: 5042
 ```
@@ -82,7 +81,7 @@ Chain ID: 5042
 ## Public repository
 
 ```text
-TODO — public git URL of this repo
+https://github.com/vincent-lxc/pulse-receipt
 ```
 
 ## Demo / video (optional)
@@ -96,7 +95,7 @@ Open the web UI → Connect wallet → Switch to Arc → paste the verified Puls
 ## Public builder profile
 
 ```text
-TODO — GitHub / X / Farcaster URL
+https://github.com/vincent-lxc
 ```
 
 ## Tracks / tags
